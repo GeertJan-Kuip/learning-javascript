@@ -1,0 +1,119 @@
+<html>
+    <head>
+      
+      <link href="style.css" rel="stylesheet" type="text/css">
+    </head>
+
+    <body>
+      <div id="containerHeader">
+
+        <div class="divHeader" id="divHeaderLeft">
+          <h1>learning about Javascript collections</h1>
+        </div>     
+
+        <div class="divHeader" id="divHeaderRight">
+          <a href="https://www.linkedin.com/in/geert-jan-kuip-95387630">
+            <img id="linkedin" src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" style="height:20px;width:auto;display:inline" alt="Linkedin icon" />
+          </a>
+        </div>
+
+      </div>
+
+      <div id="containerBody">
+
+        <div class="divBigColumns" id="columnLeft">
+          <!--THESE ARE THE TAB BUTTONS-->
+          <div class="divInColumnLeft" id="divInColumnLeft-row1">
+            <button class="tablinks" onclick="openCollectionType(event, 'Array')">Array</button>  
+            <button class="tablinks" onclick="openCollectionType(event, 'Map')">Map</button>  
+            <button class="tablinks" onclick="openCollectionType(event, 'Object')">Object</button>  
+          </div>
+
+          <!--THIS IS A HEADER WITH TITLE OF LIST-->
+          <div class="divInColumnLeft" id="divInColumnLeft-row2"><h4>Methods & properties</h4></div>
+
+          <!--THIS IS THE LIST CONTAINING METHODS AND PROPERTIES-->
+          <div class="divInColumnLeft" id="divInColumnLeft-row3">          
+            <ul id="ListMethodsProperties" >
+
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="divBigColumns" id="columnCenter">
+          <div class="divInColumnCenter" id="inputOutcome"><h2>["Car", "Boat", "Plane", "Submarine"] => ["Boat", "Plane", "Submarine"]</div>
+          <div class="divInColumnCenter" id="infoMozilla">Nou zeg</div>
+        </div>
+
+        <div class="divBigColumns" id="columnRight">
+          <section id="info">
+            <h1>About this tool</h1>
+            <p>This tool is created to explore the possibilities of Javascript. It learns you all the methods that can be applied to 
+              Javascript collections
+            </p>
+            <h2>deeper meaning</h2>
+          </section>
+        </div>
+
+
+
+        
+      </div>
+
+      <script>
+        function openCollectionType(evt, collectionType) {
+          var i, tabcontent, tablinks;
+
+
+          tablinks = document.getElementsByClassName("tablinks");
+          for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+          }
+
+          evt.currentTarget.className += " active";
+
+          populateList(["fiets","auto","koets"]);
+        }
+
+        function getAllPropertyNames(obj) {
+          let props = [];
+        
+          do {
+            Object.getOwnPropertyNames(obj).forEach(function (prop) {
+              if (props.indexOf(prop) === -1) {
+                props.push(prop);
+              }
+            });
+        
+            obj = Object.getPrototypeOf(obj);
+          } while (obj);
+        
+          return props;
+        }
+
+        function populateList() {
+
+          totalList = document.getElementById("ListMethodsProperties"); 
+          
+          allListItems = getAllPropertyNames([1,2,3]);
+
+          console.log(allListItems);
+          
+          
+          for (element of allListItems) {
+            let listItem = document.createElement('li');
+            listItem.appendChild(document.createTextNode(element));
+            totalList.appendChild(listItem);
+
+          }
+        }
+        
+
+
+        </script>
+
+
+<!--         <script defer src="./index4.js"></script> -->
+    </body>
+</html>
