@@ -69,7 +69,7 @@ body { margin: 0 }
 }
 
 #columnLeft {
-    width: 300px;
+    width: 200px;
 
     flex-shrink:0.5;
 }
@@ -85,7 +85,7 @@ body { margin: 0 }
 
 #columnRight {
     background-color: rgb(133, 133, 133);
-    width: 300px;
+    width: 200px;
 
     flex-shrink:0.5;
 
@@ -121,6 +121,16 @@ body { margin: 0 }
 .tablinks.active {
 
     background-color:rgb(39, 99, 79);
+}
+
+.clickableListItem {
+
+
+}
+
+.clickableListItem.active {
+    color: rgb(35, 66, 124);
+    
 }
 
 .divInColumnCenter {

@@ -61,59 +61,21 @@
         
       </div>
 
-      <script>
-        function openCollectionType(evt, collectionType) {
-          var i, tabcontent, tablinks;
 
 
-          tablinks = document.getElementsByClassName("tablinks");
-          for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-          }
 
-          evt.currentTarget.className += " active";
 
-          populateList(["fiets","auto","koets"]);
-        }
 
-        function getAllPropertyNames(obj) {
-          let props = [];
-        
-          do {
-            Object.getOwnPropertyNames(obj).forEach(function (prop) {
-              if (props.indexOf(prop) === -1) {
-                props.push(prop);
-              }
-            });
-        
-            obj = Object.getPrototypeOf(obj);
-          } while (obj);
-        
-          return props;
-        }
 
-        function populateList() {
 
-          totalList = document.getElementById("ListMethodsProperties"); 
-          
-          allListItems = getAllPropertyNames([1,2,3]);
 
-          console.log(allListItems);
-          
-          
-          for (element of allListItems) {
-            let listItem = document.createElement('li');
-            listItem.appendChild(document.createTextNode(element));
-            totalList.appendChild(listItem);
-
-          }
-        }
-        
-
+        <script src="./index.js"></script>
+        <script src="./getlistofmethodsandproperties.js"></script>
+        <script src="./scrapefromexternalsources.js"></script>
+        <script src="./applymethodsandproperties.js"></script>
+        <script>
 
         </script>
 
-
-<!--         <script defer src="./index4.js"></script> -->
     </body>
 </html>
