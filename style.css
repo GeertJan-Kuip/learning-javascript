@@ -81,6 +81,7 @@ body { margin: 0 }
     flex-direction: column;
     justify-content:flex-start;
     align-items: stretch;
+
 }
 
 #columnRight {
@@ -102,7 +103,23 @@ body { margin: 0 }
     align-items: center;
 }
 
+.divInColumnCenter {
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+    font-family: monospace;
+    line-height: 2em;
+}
+
+#formulaField {
+    font-family: monospace;
+    line-height: 2em;
+    font-size: 1.7em;
+    
+}
+
 #divInColumnLeft-row1 {}
+
 #divInColumnLeft-row2 {
     padding-left: 20px;
 }

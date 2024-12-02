@@ -1,11 +1,15 @@
 
-let arraySubjectToMethod = [1,2,3,4,5];
+// testing the fetch things
+
+/* let scraper = new Scraper('at', 'Array');
+let text = scraper.createURLandFetchPage();
+console.log(text); */
 
 
 
 // Clickable tabs top of left column
 
-function openCollectionType(event, collectionType) {
+function openCollectionType(event) {
     var i, tabcontent, tablinks;
 
 
@@ -16,16 +20,11 @@ function openCollectionType(event, collectionType) {
 
     event.currentTarget.className += " active";
 
-    populateList(["fiets","auto","koets"]);
+    populateList();
+
 }
 
-
-
-
-
-
-
-function populateList() {
+function populateList() {  // this function is called by 'openCollectionType' when tab buttons (Array, Map, Object) are clicked
 
     totalList = document.getElementById("ListMethodsProperties"); 
 
@@ -43,7 +42,10 @@ function populateList() {
         }
 }
 
-function clickListItem(event, ietsAnders ) {
+// this function is called from the html elementswhen list items (at, concat, pop etc) are clicked
+// A class instance 'Formula' is created, this class has several methods that do the job of publishing formula+results 
+
+function clickListItem(event) {
 
     listItems = document.getElementsByClassName("clickableListItem");
 
@@ -53,21 +55,21 @@ function clickListItem(event, ietsAnders ) {
 
     event.currentTarget.className += " active";
 
+
     let methodName = event.currentTarget.textContent;
 
-    writeFormula(methodName);
 
+    let formulaObject = new Formula(collectionType = 'Array', methodName );
+
+
+    formulaObject.runAll(collectionType = 'Array', methodName );
 
 
 }
 
-function writeFormula(method, arrayStart=arraySubjectToMethod) {
 
-    document.getElementById("inputOutcome").querySelector("h2").textContent = method;
 
     
 
 
 
-
-}
