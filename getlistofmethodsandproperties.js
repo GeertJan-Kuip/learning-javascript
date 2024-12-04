@@ -6,18 +6,19 @@
 function getAllPropertyAndMethodNames(mapOrArray) {
 
     let PropertyAndMethodNames = [];
+    let counter = 0;
   
-    do {
+    while (counter<2) {
       Object.getOwnPropertyNames(mapOrArray).forEach(function (prop) {
         if (PropertyAndMethodNames.indexOf(prop) === -1) {
             PropertyAndMethodNames.push(prop);
         }
-      });
-  
+      })
+      counter++;
       mapOrArray = Object.getPrototypeOf(mapOrArray);
-    } while (mapOrArray);
+    };
   
-    return PropertyAndMethodNames;
+    return (PropertyAndMethodNames.sort());
   }
 
 

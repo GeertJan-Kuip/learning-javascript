@@ -1,13 +1,5 @@
 
-// testing the fetch things
-
-/* let scraper = new Scraper('at', 'Array');
-let text = scraper.createURLandFetchPage();
-console.log(text); */
-
-
-
-// Clickable tabs top of left column
+//populateList(); //initiating the left column with array function
 
 function openCollectionType(event) {
     var i, tabcontent, tablinks;
@@ -26,11 +18,33 @@ function openCollectionType(event) {
 
 function populateList() {  // this function is called by 'openCollectionType' when tab buttons (Array, Map, Object) are clicked
 
-    totalList = document.getElementById("ListMethodsProperties"); 
+    //totalList = document.getElementById("ListMethodsProperties"); 
+    totalList = document.getElementById("divInColumnLeft-row3"); 
 
     allListItems = getAllPropertyAndMethodNames([]);
 
     console.log(allListItems);
+
+    while( totalList.firstChild ){
+        totalList.removeChild( totalList.firstChild );
+      }
+
+
+
+    for (element of allListItems) {
+        let listItem = document.createElement('div');
+        listItem.classList.add("clickableListItem");
+        listItem.addEventListener('click', clickListItem);
+        listItem.appendChild(document.createTextNode(element));
+        totalList.appendChild(listItem);
+        }
+
+
+
+/*     while( totalList.firstChild ){
+        totalList.removeChild( totalList.firstChild );
+      }
+
 
 
     for (element of allListItems) {
@@ -39,7 +53,7 @@ function populateList() {  // this function is called by 'openCollectionType' wh
         listItem.addEventListener('click', clickListItem);
         listItem.appendChild(document.createTextNode(element));
         totalList.appendChild(listItem);
-        }
+        } */
 }
 
 // this function is called from the html elementswhen list items (at, concat, pop etc) are clicked
@@ -62,7 +76,7 @@ function clickListItem(event) {
     let formulaObject = new Formula(collectionType = 'Array', methodName );
 
 
-    formulaObject.runAll(collectionType = 'Array', methodName );
+    formulaObject.runAll(collectionType = 'Array', methodName, START_ARRAY );
 
 
 }
