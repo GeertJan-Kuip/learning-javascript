@@ -10,7 +10,7 @@ class Scraper {
 
     async createURLandFetchPage(method, collectionType) {
 
-        const url = "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/" + collectionType + "/" method;
+        const url = "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/" + collectionType + "/" + method;
 
         try {
             const response = await fetch(url);
