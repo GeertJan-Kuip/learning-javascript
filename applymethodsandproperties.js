@@ -1,12 +1,7 @@
-const START_ARRAY = ["horse", "car", "bike", "lorry", "truck"]; //[1,2,3,4,5];
-
-
-
-
 // handy for generateArguments functions
 function getRandomInteger(min, max) { // min is included, max is not
-        return Math.floor(Math.random() * (max - min) + min);
-    }
+    return (Math.floor(Math.random() * (max - min) + min));
+}
 
 function getRandomTrueFalse() {
     return( Math.random() < 0.5 );
@@ -25,41 +20,32 @@ class Formula {
     // here the calculation is done, the method (concat, unshift or whatever) is applied to samplecollection. Returnvalues + the 
     // (un)altered array that was the starting point is returned. 
     applyMethod(methodName, sampleCollection, argumentList) {
-    
+
+        // sampleCollection heeft de vorm [immutable, mutable(copy of immutable)]
+
         let retVal;
-
-        let copySampleCollection = [...sampleCollection];
-
-        //problem: because 'sampleCollection' changes because of methods that alter the array input, the return value doesn't work.
-        // try to declare a global thing
     
-        (methodName == 'length') ? retVal = copySampleCollection[methodName] : retVal = copySampleCollection[methodName](...argumentList);
+        (methodName == 'length') ? retVal = sampleCollection[1][methodName] : retVal = sampleCollection[1][methodName](...argumentList);
     
-
-
-
-/*         console.log(methodName.toUpperCase());
-        console.log(`returnvalue = ${retVal}`);
-        console.log(`collection = ${sampleCollection}`); */
-
-        console.log(typeof argumentList[0]);
-
-
-    
-        return [retVal, copySampleCollection, argumentList];
-    
+        return [retVal, sampleCollection[1], argumentList];    
     }
 
-    createTextStringElements(collectionType, methodName, startArrayMapOrObject, retValAndAlteredStartCollection) {
+    createTextStringElements(collectionType, methodName, theStartCollection, retValAndAlteredStartCollection) {
 
         let retVal = retValAndAlteredStartCollection[0];
         let alterCollection = retValAndAlteredStartCollection[1];
         let argumentArray = retValAndAlteredStartCollection[2];
+
+        // applying 'toString' on nested array flattens it. Need function to create string-representation of nested array
         
-        let startElement = ('[' + startArrayMapOrObject.toString() + ']').replaceAll(', ', ',');
+        //let startElement = (theStartCollection[0].toString()).replaceAll(', ', ',');
+
+        let startElement = (JSON.stringify(theStartCollection[0])).replaceAll(', ', ',');
+
         let methodIncludingArguments = methodName + '(' + argumentArray.toString() + ')';
-        let returnValue = Array.isArray(retVal) ? (('[' + retVal.toString() + ']').replaceAll(', ', ',')) : String(retVal);
-        let alteredSTartElement = ('[' + alterCollection.toString() + ']').replaceAll(', ', ',');
+        let returnValue  = Array.isArray(retVal) ? ((JSON.stringify(retVal)).replaceAll(', ', ',')) : String(retVal);
+        if (['join', 'toString'].includes(methodName)) returnValue = ('"'+returnValue+'"');
+        let alteredSTartElement = (JSON.stringify(alterCollection)).replaceAll(', ', ',');
 
         return([startElement, methodIncludingArguments, returnValue, alteredSTartElement, collectionType]);
     }
@@ -69,9 +55,11 @@ class Formula {
 
         let a = arrayStringElements;
 
-        let startArrAsString = '[' + String(START_ARRAY) + ']';
 
-        let lastLine = a[3]==startArrAsString ? ("The original " + collectionType.toLowerCase() + " remains intact.") : ("The original " +  collectionType.toLowerCase() + " is modified to " + a[3] + ".");
+
+        let startArrAsString = String(a[0]);
+
+        let lastLine = a[3]==startArrAsString ? ("The original " + arrayStringElements[4].toLowerCase() + " remains intact.") : ("The original " +  arrayStringElements[4].toLowerCase() + " is modified to " + a[3] + ".");
 
 
         let formattedSTring = `${startArrAsString}.${a[1]} = ${a[2]}<br/>${lastLine}`;
@@ -89,13 +77,27 @@ class Formula {
 
 
     // Arrays only - long function body, for every method I need to write a custom algorithm that calculates adequate arguments
-    generateArgumentsForArrayType(methodName, sampleCollection) {
+    generateArgumentsForArrayType(methodName, sampleCollection, numberOrString) {
 
+        //the switch statement is long and has one namespace, therefore I declare its variables beforehand
         let retVal = [];
+        let retFunction;
+        let a,b,c;
+        let counter;
+        let sampleLength = sampleCollection[0].length;
 
-        const sampleLength = sampleCollection.length;
+        let arrayFunctions_01a = [(c => c>6), (c => c<=5), (c => c>0), (c => (c % 2 == 0)), (c => c==3), (c => typeof c=='number')];
+        let arrayFunctions_01b = [(c => c>4), (c => c<=1), (c => (c % 2 == 1)), (c => (c^2 >= 1)), (c => c==0), (c => typeof c=='string')];
+        let arrayFunctions_01 = arrayFunctions_01a.concat(arrayFunctions_01b);
+        let arrayFunctions_02 = [(c => console.log(c + 'is a number')), (element => console.log(String(element)))];
+        let arrayFunctions_03 = [(c => c*2), (c => c%3==2), (c => c%2), (c => -c), (c => (Math.sqrt(c)).toFixed(2)), (c => Math.pow(c,2))];
+        let arrayFunctions_04 = [((accumulator, p) => accumulator + p),((total, z) => total * z),((nOdd, z) => nOdd + z%2) ];
+        let arrayFunctions_05 = [(((a,b) => b-a)), ((a,b) => (b%2) - 1), ((a,b) => a*b-7)];
+        let arrayFunctions_06 = [((num) => (num === 2 ? [2, 2] : num*num)),((r) => (r < 4 ? [r+3, 2] : 0)),((s) => (s % 2 == 0 ? [0,0,0] : s))];
+           
+        let arraySeparators = ["", "..", " : ", "--", "-", ";", "_", ".", "###"];
 
-        const functionsWithZeroArguments = ["entries", "join", "keys", "length", "pop", "reverse", "shift", "toReversed", "toString", "values"];
+        const functionsWithZeroArguments = ["entries", "keys", "length", "pop", "reverse", "shift", "toReversed", "toString", "values"];
 
 
         if (functionsWithZeroArguments.includes(methodName)) {
@@ -107,7 +109,7 @@ class Formula {
         switch(methodName) {
 
             case "at":            
-                const index = Math.floor(getRandomInteger(-sampleLength, sampleLength)); 
+                const index = Math.floor(getRandomInteger(-sampleLength, sampleLength + 2)); 
                 retVal.push(index);
                 break;
 
@@ -123,58 +125,65 @@ class Formula {
                 break;
 
             case "copyWithin":
-                let a = getRandomInteger(0,sampleLength);
-                let b = getRandomInteger(0,sampleLength-1);
+                a = getRandomInteger(0,sampleLength);
+                b = getRandomInteger(0,sampleLength-1);
                 while (b==a) b = getRandomInteger(0,sampleLength-1);
-                let c = getRandomInteger(b+1,sampleLength);
+                c = getRandomInteger(b+1,sampleLength);
 
                 retVal = [a,b,c];
                 break;
 
-            case "every":
-                let retFunction = getRandomTrueFalse() ? ((c => c>6)) : ((c => c<6))
+            case "every":                
+                retFunction = arrayFunctions_01[getRandomInteger(0,arrayFunctions_01.length)];
                 retVal.push(retFunction);
                 break;   
 
             case "fill":
-                let d = getRandomInteger(0,sampleLength); // value that will replace other values
-                let e = getRandomInteger(0,sampleLength-1);
-                let f = getRandomInteger(e+1,sampleLength);
+                a  = getRandomInteger(0,sampleLength); // value that will replace other values
+                b = getRandomInteger(0,sampleLength-1);
+                c = getRandomInteger(b+1,sampleLength);
 
-                retVal = [d,e,f];
+                retVal = [a,b,c];
                 break;  
 
             case "filter":
-                let retFunction2 = getRandomTrueFalse() ? ((c => c>2)) : ((c => c<3));
-                retVal.push(retFunction2);
+                retFunction = arrayFunctions_01[getRandomInteger(0,arrayFunctions_01.length)];
+                retVal.push(retFunction);
                 break; 
 
             case "find":
-                retVal.push(getRandomTrueFalse() ? ((c => c>2)) : ((c => c<3)));
+                retFunction = arrayFunctions_01[getRandomInteger(0,arrayFunctions_01.length)];
+                retVal.push(retFunction);
                 break;
                 
             case "findIndex":
-                retVal.push(getRandomTrueFalse() ? ((c => c>2)) : ((c => c<3)));
+                retFunction = arrayFunctions_01[getRandomInteger(0,arrayFunctions_01.length)];
+                retVal.push(retFunction);
                 break;
                 
             case "findLast":
-                retVal.push(getRandomTrueFalse() ? ((c => c>2)) : ((c => c<3)));
+                retFunction = arrayFunctions_01[getRandomInteger(0,arrayFunctions_01.length)];
+                retVal.push(retFunction);
                 break;
 
             case "findLastIndex":
-                retVal.push(getRandomTrueFalse() ? ((c => c>2)) : ((c => c<3)));
+                retFunction = arrayFunctions_01[getRandomInteger(0,arrayFunctions_01.length)];
+                retVal.push(retFunction);
                 break;
 
             case "flat":
-                // requires modification of START_ARRAY, it needs nested arrays
+                retVal.push(getRandomInteger(0,2));
                 break;
 
+
             case "flatMap":
-                // slightly more complicated 
+                retFunction = arrayFunctions_06[getRandomInteger(0,arrayFunctions_06.length)];
+                retVal.push(retFunction);
                 break;
 
             case "forEach":
-                retVal.push(getRandomTrueFalse() ? ((c => c+1)) : ((c => c*2)));
+                retFunction = arrayFunctions_02[getRandomInteger(0,arrayFunctions_02.length)];
+                retVal.push(retFunction);
                 break;
 
             case "hasOwnProperty":
@@ -187,10 +196,15 @@ class Formula {
 
             case "indexOf":
                 retVal.push(getRandomInteger(0,9));
-                break;
+                break;            
 
             case "isPrototypeOf":
                 retVal.push('object');
+                break;
+               
+            case "join":    
+                retFunction = arraySeparators[getRandomInteger(0,arraySeparators.length)];
+                retVal.push(retFunction);
                 break;
 
             case "lastIndexOf":
@@ -198,49 +212,51 @@ class Formula {
                 break;
 
             case "map":
-                retVal.push(c => c*2);
+                retFunction = arrayFunctions_03[getRandomInteger(0,arrayFunctions_03.length)];
+                retVal.push(retFunction);
                 break;
 
             case "push":
-                let randomNumber = getRandomInteger(1,4);
-                let counter=1;
-                while (counter<randomNumber) {
+                a = getRandomInteger(1,4);
+                counter=0;
+                while (counter<a) {
                     retVal.push(getRandomInteger(1,20));   
                     counter++;      
                 }       
                 break;
 
             case "reduce":
-                retVal.push((accumulator, p) => accumulator + p);
+                retFunction = arrayFunctions_04[getRandomInteger(0,arrayFunctions_04.length)];
+                retVal.push(retFunction);
                 break;
 
             case "reduceRight":
-                retVal.push((accumulator, p) => accumulator - p);
+                retFunction = arrayFunctions_04[getRandomInteger(0,arrayFunctions_04.length)];
+                retVal.push(retFunction);
                 break;
 
             case "slice":
-                let g = getRandomInteger(-sampleLength+1,sampleLength-1);
-                let h = g<0 ? getRandomInteger(g+1, 0) : getRandomInteger(g+1,sampleLength);
-                retVal = [g,h];
+                a = getRandomInteger(-sampleLength+1,sampleLength-1);
+                b = a<0 ? getRandomInteger(a+1, 0) : getRandomInteger(a+1,sampleLength);
+                retVal = [a,b];
                 break;
 
             case "some":
-                // make sure that the getRandomInteger is kept out of the published string
-                // this actually works, sending a function with a function nested within
-                retVal.push((element) => element * 2 === getRandomInteger(0,11));
+                retFunction = arrayFunctions_01[getRandomInteger(0,arrayFunctions_01.length)];
+                retVal.push(retFunction);
                 break;
 
             case "sort":
-                // interesting with sort function between parentheses
-                retVal.push(((a,b) => b-a));
+                retFunction = arrayFunctions_05[getRandomInteger(0,arrayFunctions_05.length)];
+                retVal.push(retFunction);
                 break;
 
             case "splice":
                 // items are deleted between place arg 1 and place arg 2, arg 3 comes in their place
-                let j = getRandomInteger(0, sampleLength-1);
-                let k = getRandomInteger(j+1, sampleLength);
-                let l = getRandomInteger(11,30);
-                retVal.push(j,k,l);
+                a = getRandomInteger(0, sampleLength-1);
+                b = getRandomInteger(a+1, sampleLength);
+                c = getRandomInteger(11,30);
+                retVal.push(a,b,c);
                 break;
 
             case "toLocaleString":
@@ -248,23 +264,24 @@ class Formula {
                 break;
 
             case "toSorted":
-                retVal.push(((a,b) => b-a));
+                retFunction = arrayFunctions_05[getRandomInteger(0,arrayFunctions_05.length)];
+                retVal.push(retFunction);
                 break;
 
             case "toSpliced":
                 // items are deleted between place arg 1 and place arg 2, arg 3 comes in their place
-                let m = getRandomInteger(0, sampleLength-1);
-                let n = getRandomInteger(m+1, sampleLength);
-                let o = getRandomInteger(11,30);
-                retVal.push(m,n,o);
+                a = getRandomInteger(0, sampleLength-1);
+                b = getRandomInteger(a+1, sampleLength);
+                c = getRandomInteger(11,30);
+                retVal.push(a,b,c);
                 break;
 
             case "unshift":
-                let randomNumber2 = getRandomInteger(1,4);
-                let counter2=0;
-                while (counter2<randomNumber2) {
+                a = getRandomInteger(1,4);
+                counter=0;
+                while (counter<a) {
                     retVal.push(getRandomInteger(11,30));   
-                    counter2++;      
+                    counter++;      
                 }     
                 break;
 
@@ -273,31 +290,55 @@ class Formula {
                 break;
 
             case "with":
-                let p = getRandomInteger(0, sampleLength);
-                let q = getRandomInteger(20,40);
-                retVal.push(p,q);
+                a = getRandomInteger(0, sampleLength);
+                b = getRandomInteger(20,40);
+                retVal.push(a,b);
                 break;
             
-
-
-
-
-
         }
-
 
     return retVal;
 
     }
 
+    chooseStartCollection(collectionType, method, numberOrString) {
+
+        const START_ARRAY_NUMBER =  [1,2,3,4,5];   //
+        const START_ARRAY_NUMBER_NESTED = [[1,2,3,[4,5]], [1,[2,3],4,5], [1,[2,[3,4]],5], [[1,2],[3,4],[[5]]]];
+        const START_ARRAY_STRING = ["horse", "car", "bike", "lorry", "truck"];
+        const START_ARRAY_STRING_NESTED = [["horse","car","bike",["lorry","truck"]],["horse",["car", "bike"],"lorry","truck"],[["horse",["car", "bike","lorry"]],"truck"] ];     
+
+        let retVal = []; // idea: let retVal contain both an immutable and a mutable variant of the collection. Immutable to be used in string generation for result.
+
+        if ((collectionType == 'Array') && (numberOrString == 'number')) {
+
+            let whichNested = getRandomInteger(0,4);
+
+            ['flat'].includes(method) ? retVal.push(START_ARRAY_NUMBER_NESTED[whichNested], [...START_ARRAY_NUMBER_NESTED[whichNested]]) : retVal.push(START_ARRAY_NUMBER, [...START_ARRAY_NUMBER]);
+
+        }
+        if ((collectionType == 'Array') && (numberOrString == 'string')) {
+
+            ['flat'].includes(method) ? retVal.push(START_ARRAY_STRING_NESTED[whichNested], [...START_ARRAY_STRING_NESTED[whichNested]]) : retVal.push(START_ARRAY_STRING, [...START_ARRAY_STRING]);
+ 
+        }
 
 
-    runAll(type, method, startArray) {
 
-        let argumentArray = this.generateArgumentsForArrayType(method,startArray);
-        let outcome = this.applyMethod(method, startArray, argumentArray);
-        let stringOutcome = this.createTextStringElements(type, method, START_ARRAY, outcome);
-        let stringFormatted = this.formatString(stringOutcome, type);
+        return(retVal);
+
+    }
+
+
+
+    runAll(collectionType, method, numberOrString = 'number') {
+
+        let theStartCollection = this.chooseStartCollection(collectionType, method, numberOrString);
+
+        let argumentArray = this.generateArgumentsForArrayType(method, theStartCollection);
+        let outcome = this.applyMethod(method, theStartCollection, argumentArray);
+        let stringOutcome = this.createTextStringElements(collectionType, method, theStartCollection, outcome);
+        let stringFormatted = this.formatString(stringOutcome, collectionType);
         this.publishString(stringFormatted);
     }
 

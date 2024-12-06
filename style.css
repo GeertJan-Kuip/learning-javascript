@@ -4,6 +4,20 @@
     --text-color2: rgb(62, 68, 28);
 }
 
+h1 {
+    color: var(--text-color1);
+    font-size: 1.5rem;
+}
+
+h2 {
+    color: var(--text-color1);
+}
+
+p {
+    color: var(--text-color2);
+}
+
+
 /* fill full viewport */
 html, body  { 
 
@@ -63,14 +77,6 @@ body {
     flex-shrink:0;
 }
 
-/* .divBigColumns {
-    display: flex;
-    background-color: rgb(202, 202, 202);
-    height: 100%;
-    overflow: hidden;
-    border: 4px solid rgb(30, 189, 128);
-} */
-
 #columnLeft {
     display: flex;
     flex-direction: column;
@@ -101,7 +107,7 @@ body {
     overflow: hidden;
 }
 
-.divHeader {
+#divHeaderLeft {
     display: flex;
     background-color: white;
     border: 1px solid orange;
@@ -109,19 +115,20 @@ body {
     flex-grow:1;
     padding-left: 50px;
     padding-right: 50px;
-}
-
-#divHeaderLeft {
-
-}
-
-#divHeaderRight {
-    justify-content: flex-end;
     align-items: center;
 }
 
-
-
+#divHeaderRight {
+    display: flex;
+    background-color: white;
+    border: 1px solid orange;
+    align-items: stretch;
+    flex-grow:1;
+    padding-left: 50px;
+    padding-right: 50px;
+    justify-content: flex-end;
+    align-items: center;
+}
 
 .divFooter {
     display: flex;
@@ -132,16 +139,6 @@ body {
     padding-left: 50px;
     padding-right: 50px;
 }
-
-
-
-
-
-
-
-
-
-
 
 .divInColumnCenter {
     padding-left: 20px;
@@ -157,11 +154,8 @@ body {
     font-size: 1.7em;    
 }
 
-.divInColumnLeft {
- 
-    
+.divInColumnLeft {    
     border: 1px solid black;
-
 }
 
 #divInColumnLeft-row1 {
@@ -175,6 +169,7 @@ body {
     text-align: center;
     background-color: rgb(190, 153, 153);
 }
+
 #divInColumnLeft-row3 {
 
     height:100%;
@@ -189,29 +184,23 @@ body {
     align-content: space-evenly;
     flex-wrap: wrap;
     gap: 5px;
-
 }
-
 
 .tablinks {
     flex-grow:1;
-
     background-color:aquamarine;
 }
 
 .tablinks.active {
-
     background-color:rgb(39, 99, 79);
 }
 
 .clickableListItem {
-    width: 100px;
-    height:18px;
+    width: 120px;
+    height:22px;
     border: 1px solid black;
     text-align: center;
-
-
-
+    cursor: pointer; 
 }
 
 .clickableListItem.active {
@@ -229,38 +218,9 @@ body {
     align-items: center;
 }
 
-#inputOutcome {
-
-
-}
-
 #infoMozilla {
     padding: 20px;
     flex-grow: 1;
     align-items: flex-start;
 }
 
-#About {
-
-    
-}
-
-
-
-h1 {
-    color: var(--text-color1);
-    font-size: 1.5rem;
-    
-
-}
-
-h2 {
-    color: var(--text-color1);
-    
-
-}
-
-p {
-    color: var(--text-color2);
-
-}

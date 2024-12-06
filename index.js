@@ -1,5 +1,4 @@
-
-//populateList(); //initiating the left column with array function
+populateList(); //initiating the left column with array function
 
 function openCollectionType(event) {
     var i, tabcontent, tablinks;
@@ -22,8 +21,6 @@ function populateList() {  // this function is called by 'openCollectionType' wh
     totalList = document.getElementById("divInColumnLeft-row3"); 
 
     allListItems = getAllPropertyAndMethodNames([]);
-
-    console.log(allListItems);
 
     while( totalList.firstChild ){
         totalList.removeChild( totalList.firstChild );
@@ -69,15 +66,15 @@ function clickListItem(event) {
 
     event.currentTarget.className += " active";
 
-
     let methodName = event.currentTarget.textContent;
 
+    let collectionType = tablinks = document.getElementsByClassName("tablinks active")[0].textContent;
 
-    let formulaObject = new Formula(collectionType = 'Array', methodName );
+    console.log(collectionType);
 
+    let formulaObject = new Formula(collectionType, methodName );
 
-    formulaObject.runAll(collectionType = 'Array', methodName, START_ARRAY );
-
+    formulaObject.runAll(collectionType, methodName );
 
 }
 
