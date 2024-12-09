@@ -11,6 +11,7 @@ class FormulaArray {
         this.returnValue;
         this.textStringElements;
         this.formattedText;
+
     }
 
     // apply array method and set this.returnvalue
@@ -38,9 +39,15 @@ class FormulaArray {
 
         let startArrAsString = this.textStringElements[0];
 
+        let firstLine = this.textStringElements[0] + '.' + this.textStringElements[1] + ' = ' + this.textStringElements[2];
+
         let lastLine = this.textStringElements[3]==startArrAsString ? ("The original array remains intact.") : ("The original array is modified to " + this.textStringElements[3] + ".");
 
-        this.formattedText = `${startArrAsString}.${this.textStringElements[1]} = ${this.textStringElements[2]}<br/>${lastLine}`;
+        //this.formattedText = `${startArrAsString}.${this.textStringElements[1]} = ${this.textStringElements[2]}<br/>${lastLine}`;
+
+        this.formattedText = `${firstLine}<br/>${lastLine}`;
+
+
     }
 
     // fill DOM element
@@ -132,7 +139,7 @@ class FormulaArray {
                 break;
 
             case "flat":
-                retVal.push(getRandomInteger(0,2));
+                retVal.push(getRandomInteger(1,2));
                 break;
 
             case "flatMap":
@@ -258,7 +265,7 @@ class FormulaArray {
     chooseStartCollection( ) {
 
         let retVal = []; // idea: let retVal contain both an immutable and a mutable variant of the collection. Immutable to be used in string generation for result.
-        this.numberOrString = Math.random()<0.5 ? 'number' : 'string';
+        this.numberOrString = Math.random()<1.1 ? 'number' : 'string';
         let whichNestedValue = getRandomInteger(0,4);
 
         if (this.numberOrString == 'number') {            

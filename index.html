@@ -1,6 +1,5 @@
 <html>
-    <head>
-      
+    <head>      
       <link href="style.css" rel="stylesheet" type="text/css">
     </head>
 
@@ -8,23 +7,31 @@
       <div id="containerHeader">
 
         <div class="divHeader" id="divHeaderLeft">
-          <h1>Practice with Javascript collections</h1>
+          <h1>Learning Javascript - click a method to see a random example</h1>
         </div>     
 
         <div class="divHeader" id="divHeaderRight">
-          <a href="https://www.linkedin.com/in/geert-jan-kuip-95387630">
-            <img id="linkedin" src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" style="height:20px;width:auto;display:inline" alt="Linkedin icon" />
-          </a>
+          <div class="webLinks">
+            <a href="https://geertjan-kuip.github.io/" >
+              my blog
+             </a>
+          </div>
+          <div class="webLinks">
+            <a href="https://github.com/GeertJan-Kuip/learning-javascript">
+              GitHub repository of this project
+             </a>
+          </div>
+          <div class="webLinks">
+            <a href="https://www.linkedin.com/in/geert-jan-kuip-95387630" >my LinkedIn
+              <img id="linkedin" src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" style="height:20px;width:auto" alt="Linkedin icon" />            
+              
+            </a>
+          </div>
         </div>
-
       </div>
 
       <div id="containerBody">
-
-
         <div id="columnLeft">
-
-
 
           <div class="divInColumnLeft" id="divInColumnLeft-row1">
             <button class="tablinks active" onclick="openCollectionType(event, 'Array')">Array</button>  
@@ -32,48 +39,50 @@
             <button class="tablinks" onclick="openCollectionType(event, 'Object')">Object</button>  
           </div>
 
-
           <div class="divInColumnLeft" id="divInColumnLeft-row2"><h4>Methods & properties</h4></div>
-
 
           <div class="divInColumnLeft" id="divInColumnLeft-row3">  
 
           </div>
 
-
-
         </div>
-
-
 
 
         <div id="columnCenter">
-          <div class="divInColumnCenter" id="inputOutcome"><h2 id="formulaField">start</div>
-          <div class="divInColumnCenter" id="infoMozilla">Nou zeg</div>
+          <div class="divInColumnCenter" id="inputOutcome"><h2 id="formulaField">click a method</div>
+          <div class="divInColumnCenter" id="infoMozilla">to be further developed</div>
         </div>
-
-
-
-
 
         <div id="columnRight">
           <section id="info">
-            <h1>About this tool</h1>
-            <p>This tool is created to explore the possibilities of Javascript. It learns you all the methods that can be applied to 
-              Javascript collections
+            <h2>About this tool</h2>
+            <p>This tool is created to get familiar with Javascript functions and properties. It is a work in progress, only array functions are included yet.
             </p>
-            <h2>deeper meaning</h2>
+            <h3>What I learned</h3>
+            <p>
+              Creating this pet project learned me about:
+              <ul>
+                <li>encapsulating code in classes</li>
+                <li>better code organization</li>
+                <li>using this in classes</li>
+                <li>arrow notation and other ES6 conveniences</li>
+                <li>all array methods</li>
+                <li>CSS and Flexbox</li>
+                <li>writing CSS with variables</li>
+                <li>creating a public repository on GitHub</li>
+              </ul>   
+              <p>The GitHub repository can be found <a href="https://github.com/GeertJan-Kuip/learning-javascript">here</a>.</p>       
+            </p>
+            <h3>Further developments</h3>
+            <p>Probably I won't be adding all Javascript functions and properties, although the code easily allows it. What I want to do is fetch content from the Mozilla website. Each time you click a function, you can read some relevant fragments of the original documentation. 
+            </p>
+            
           </section>
         </div>
-
-
-
         
       </div>
       <div id="containerFooter">
         <div class="divFooter">
-
-          dsafasfasf
         </div>        
       </div>
 
