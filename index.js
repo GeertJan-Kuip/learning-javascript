@@ -35,22 +35,6 @@ function populateList() {  // this function is called by 'openCollectionType' wh
         listItem.appendChild(document.createTextNode(element));
         totalList.appendChild(listItem);
         }
-
-
-
-/*     while( totalList.firstChild ){
-        totalList.removeChild( totalList.firstChild );
-      }
-
-
-
-    for (element of allListItems) {
-        let listItem = document.createElement('li');
-        listItem.classList.add("clickableListItem");
-        listItem.addEventListener('click', clickListItem);
-        listItem.appendChild(document.createTextNode(element));
-        totalList.appendChild(listItem);
-        } */
 }
 
 // this function is called from the html elementswhen list items (at, concat, pop etc) are clicked
@@ -62,19 +46,20 @@ function clickListItem(event) {
 
     for (i = 0; i < listItems.length; i++) {
         listItems[i].className = listItems[i].className.replace(" active", "");
-    }
+      }
 
     event.currentTarget.className += " active";
 
-    let methodName = event.currentTarget.textContent;
+    let dataType = document.getElementsByClassName("tablinks active")[0].textContent;
 
-    let collectionType = tablinks = document.getElementsByClassName("tablinks active")[0].textContent;
+    let method = event.currentTarget.textContent;
 
-    console.log(collectionType);
 
-    let formulaObject = new Formula(collectionType, methodName );
+    if (dataType === 'Array') {
 
-    formulaObject.runAll(collectionType, methodName );
+      let formulaObject = new FormulaArray(method);
+      formulaObject.runAll();
+      }
 
 }
 
