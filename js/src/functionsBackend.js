@@ -6,3 +6,4 @@ function getRandomInteger(min, max) { // min is included, max is not
 function getRandomTrueFalse() {
     return( Math.random() < 0.5 );
 }
+

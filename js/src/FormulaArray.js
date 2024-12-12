@@ -1,16 +1,8 @@
-class FormulaArray {
+class FormulaArray extends Formula {
 
     constructor(method) {
-
-        this.method = method;
-        this.numberOrString;
-        this.sampleFixed;
-        this.sampleMutable;
-        this.nestedSample;
-        this.argumentList;
-        this.returnValue;
-        this.textStringElements;
-        this.formattedText;
+        super(method);
+        
 
     }
 
@@ -48,12 +40,6 @@ class FormulaArray {
         this.formattedText = `${firstLine}<br/>${lastLine}`;
 
 
-    }
-
-    // fill DOM element
-    publishString() {
-
-        document.getElementById("formulaField").innerHTML = this.formattedText;
     }
 
 

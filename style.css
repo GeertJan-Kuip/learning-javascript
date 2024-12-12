@@ -114,7 +114,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    width: 300px;
+    width: 360px;
     flex-shrink:0;
     padding: 0px;
 
@@ -161,7 +161,7 @@ body {
     padding-left: 100px;
     padding-right: 0px;
     align-items: center;
-    background-image: url("background.jpg");
+    background-image: url("images/background.jpg");
 }
 
 #divHeaderRight {
@@ -237,7 +237,8 @@ body {
 }
 
 #divInColumnLeft-row2 {
-    text-align: center;
+    text-align: left;
+    padding-left:50px;
     background-color: none;
     border-bottom: var(--border-type1);
 
@@ -263,7 +264,7 @@ body {
     font-family: var(--font2);
 }
 
-.tablinks {
+.tabLinks {
     flex-grow:1;
     background-color:var(--bg-color5);
 
@@ -274,7 +275,7 @@ body {
 
 }
 
-.tablinks.active {
+.tabLinks.active {
     background-color:var(--bg-color4);;
 }
 
@@ -282,7 +283,7 @@ body {
     width: 120px;
     height:24px;
     border: var(--border-type1);
-    text-align: center;
+    text-align: left;
     cursor: pointer; 
     text-decoration: underline;
 }
